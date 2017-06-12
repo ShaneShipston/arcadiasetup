@@ -1,0 +1,82 @@
+#!/bin/bash
+for ((i=1;i<=$#;i++))
+do
+    if [ ${!i} = "--theme" ];
+    then ((i++))
+        theme=${!i};
+
+    elif [ ${!i} = "--pages" ];
+    then ((i++))
+        pages=${!i};
+
+    elif [ ${!i} = "--title" ];
+    then ((i++))
+        title=${!i};
+
+    elif [ ${!i} = "--domain" ];
+    then ((i++))
+        domain=${!i};
+
+    elif [ ${!i} = "--directory" ];
+    then ((i++))
+        directory=${!i};
+    fi
+done
+
+if [ -z ${theme+x} ]; then
+    theme="arcadia";
+fi
+
+# Clone Arcadia Box
+if [ ${directory+x} ]; then
+    git clone --depth 1 https://ShaneShipston@bitbucket.org/ShaneShipston/arcadiabox.git ${directory}
+    cd ${directory}
+else
+    git clone --depth 1 https://ShaneShipston@bitbucket.org/ShaneShipston/arcadiabox.git ${theme}
+    cd ${theme}
+fi
+
+# Remove history
+rm -rf .git
+
+# Update Theme
+if [ ${theme+x} ]; then
+    sed -i "s/\"theme\": \"arcadia\"/\"theme\": \"${theme}\"/g" config.json
+fi
+
+# Update Pages
+if [ ${pages+x} ]; then
+    IFS=',' read -r -a pagelist <<< ${pages}
+
+    pagefeed='';
+
+    for element in "${pagelist[@]}"
+    do
+        pagefeed+="\n    \"$(echo -e "${element}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')\""
+
+        if [ "${pagelist[-1]}" != "${element}" ]; then
+            pagefeed+=","
+        fi
+    done
+
+    sed -i "s/\"pages\": \[\]/\"pages\": \[${pagefeed}\n\  ]/g" config.json
+fi
+
+# Update Domain
+if [ ${domain+x} ]; then
+    sed -i "s/\"url\": \"arcadia.dev\"/\"url\": \"${domain}\"/g" config.json
+fi
+
+# Update Title
+if [ ${title+x} ]; then
+    sed -i "s/\"title\": \"WPDev\"/\"title\": \"${title}\"/g" config.json
+fi
+
+# Initial Setup
+vagrant up
+
+# Switch to theme
+cd public/wp-content/themes/${theme}
+
+# Download NPM Packages
+npm install
