@@ -79,4 +79,5 @@ vagrant up
 cd public/wp-content/themes/${theme}
 
 # Download NPM Packages
+echo 'Installing NPM Packages'
 npm install
