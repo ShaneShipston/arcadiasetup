@@ -36,3 +36,8 @@ Copy the `new-project` file into your root projects directory then run the follo
 
 * Default: **Theme name**
 * Example: `--directory example-folder`
+
+`--repo` Name of git repo
+
+* Default: **Theme name**
+* Example: `--repo git-repo`
