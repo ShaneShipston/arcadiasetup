@@ -98,3 +98,6 @@ git commit -m 'Cloned base theme' -q
 # Download NPM Packages
 echo 'Installing NPM Packages'
 npm install
+
+# Prepare assets
+gulp init
