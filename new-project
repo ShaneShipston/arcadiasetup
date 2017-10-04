@@ -101,3 +101,8 @@ npm install
 
 # Prepare assets
 gulp init
+
+# Open Sublime
+if type "subl" > /dev/null 2>&1; then
+    subl .
+fi
