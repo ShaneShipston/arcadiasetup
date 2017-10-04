@@ -41,35 +41,35 @@ rm -rf .git
 
 # Update Theme
 if [ ${theme+x} ]; then
-    sed -i "s/\"theme\": \"arcadia\"/\"theme\": \"${theme}\"/g" config.json
+    sed -i'.backup' "s/\"theme\": \"arcadia\"/\"theme\": \"${theme}\"/g" config.json
 fi
 
 # Update Pages
 if [ ${pages+x} ]; then
-    IFS=',' read -r -a pagelist <<< ${pages}
+    IFS=','; pagelist=($pages)
 
     pagefeed='';
 
     for element in "${pagelist[@]}"
     do
-        pagefeed+="\n    \"$(echo -e "${element}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')\""
+        pagefeed+="\"$(echo -e "${element}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')\""
 
-        if [ "${pagelist[-1]}" != "${element}" ]; then
+        if [ "${pagelist[${#pagelist[@]}-1]}" != "${element}" ]; then
             pagefeed+=","
         fi
     done
 
-    sed -i "s/\"pages\": \[\]/\"pages\": \[${pagefeed}\n\  ]/g" config.json
+    sed -i".backup" "s/\"pages\": \[\]/\"pages\": \[${pagefeed}\]/g" config.json
 fi
 
 # Update Domain
 if [ ${domain+x} ]; then
-    sed -i "s/\"url\": \"arcadia.dev\"/\"url\": \"${domain}\"/g" config.json
+    sed -i'.backup' "s/\"url\": \"arcadia.dev\"/\"url\": \"${domain}\"/g" config.json
 fi
 
 # Update Title
 if [ ${title+x} ]; then
-    sed -i "s/\"title\": \"WPDev\"/\"title\": \"${title}\"/g" config.json
+    sed -i'.backup' "s/\"title\": \"WPDev\"/\"title\": \"${title}\"/g" config.json
 fi
 
 # Initial Setup
