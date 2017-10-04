@@ -1,6 +1,6 @@
 # New Project
 
-Current Version: `0.1.x`
+Current Version: `0.2.x`
 
 ## Usage
 
