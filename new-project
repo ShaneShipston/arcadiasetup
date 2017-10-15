@@ -35,6 +35,10 @@ if [ -z ${repo+x} ]; then
     repo=theme;
 fi
 
+if [ -z ${domain+x} ]; then
+    domain="arcadia.dev";
+fi
+
 # Clone Arcadia Box
 if [ ${directory+x} ]; then
     git clone --depth 1 https://ShaneShipston@bitbucket.org/ShaneShipston/arcadiabox.git ${directory}
@@ -71,9 +75,7 @@ if [ ${pages+x} ]; then
 fi
 
 # Update Domain
-if [ ${domain+x} ]; then
-    sed -i'.backup' "s/\"url\": \"arcadia.dev\"/\"url\": \"${domain}\"/g" config.json
-fi
+sed -i'.backup' "s/\"url\": \"arcadia.dev\"/\"url\": \"${domain}\"/g" config.json
 
 # Update Title
 if [ ${title+x} ]; then
@@ -105,4 +107,13 @@ gulp init
 # Open Sublime
 if type "subl" > /dev/null 2>&1; then
     subl .
+fi
+
+# Open starting pages
+if type "open" > /dev/null 2>&1; then
+    open http://${domain}
+    open http://${domain}/wp-admin
+else
+    cmd /c start http://${domain}
+    cmd /c start http://${domain}/wp-admin
 fi
