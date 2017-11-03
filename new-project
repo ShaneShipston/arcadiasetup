@@ -32,7 +32,7 @@ if [ -z ${theme+x} ]; then
 fi
 
 if [ -z ${repo+x} ]; then
-    repo=theme;
+    repo=${theme};
 fi
 
 if [ -z ${domain+x} ]; then
