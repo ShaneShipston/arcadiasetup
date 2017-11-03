@@ -41,3 +41,15 @@ Copy `new-project` into your root projects directory then run the following from
 
 * Default: **Theme name**
 * Example: `--repo git-repo`
+
+# Migration Script
+
+This essentially converts an existing project from .dev to .local
+
+## Usage
+
+Copy `migrate.sh` into the same directory as your `Vagrantfile` then run the following from the command line.
+
+```
+vagrant ssh -c "bash /var/www/migrate.sh"
+```
