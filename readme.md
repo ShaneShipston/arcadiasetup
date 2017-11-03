@@ -4,7 +4,7 @@ Current Version: `0.2.x`
 
 ## Usage
 
-Copy the `new-project` file into your root projects directory then run the following from the command line.
+Copy `new-project` into your root projects directory then run the following from the command line.
 
 ```
 ./new-project --theme example
@@ -29,8 +29,8 @@ Copy the `new-project` file into your root projects directory then run the follo
 
 `--domain` Project's domain. *This will need to be added to your hosts file*.
 
-* Default: **arcadia.dev**.
-* Example: `--domain example.dev`
+* Default: **arcadia.local**.
+* Example: `--domain example.local`
 
 `--directory` Directory to install the project in
 
